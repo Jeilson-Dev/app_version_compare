@@ -1,28 +1,47 @@
-[![Coverage Status](https://coveralls.io/repos/github/Jeilson-Dev/app_version_compare/badge.svg?branch=main)](https://coveralls.io/github/Jeilson-Dev/app_version_compare?branch=main)
+# App Version Compare
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+## Overview
 
-## Features
+This Dart package provides a utility for parsing version strings according to Semantic Versioning (SemVer) and comparing two versions. It's particularly useful for managing app versions and implementing version comparison logic, such as determining whether a force update is required based on a version retrieved from a remote configuration.
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+## Installation
 
-## Getting started
+You can install this package via pub.dev. Add the following line to your `pubspec.yaml` file:
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+Then, run:
+
+```bash
+flutter pub add app_version_compare
+```
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+### Comparing Versions
 
 ```dart
-const like = 'sample';
+void main() {
+  final remoteConfigVersion = '1.2.4';
+  final appVersion = '1.2.3';
+
+  final remoteVersion = AppVersion.fromString(remoteConfigVersion);
+  final appCurrentVersion = AppVersion.fromString(appVersion);
+
+  if (appCurrentVersion >= remoteVersion) {
+    print('The app is updated!');
+    print('Current app version: $appCurrentVersion');
+    print('Latest version available: $remoteVersion');
+  } else {
+    print('The app is out of date!');
+    print('Current app version: $appCurrentVersion');
+    print('Latest version available: $remoteVersion');
+  }
+}
 ```
 
-## Additional information
+## Support
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+For any issues or suggestions, please [open an issue](https://github.com/Jeilson-Dev/app_version_compare/issues) on GitHub.
+
+## License
+
+This package is licensed under the MIT License. See the [LICENSE](https://github.com/Jeilson-Dev/app_version_compare/blob/main/LICENSE) file for details.
