@@ -76,7 +76,6 @@ class AppVersion {
 
   bool operator >(Object other) {
     if (identical(this, other)) return true;
-    final isAppVersion = other is AppVersion;
     return other is AppVersion && isGreater(_toList, other._toList);
   }
 
