@@ -1,14 +1,12 @@
 name: app_version_compare
 description: A powerful tool to compare package or app versions.
-version: 1.0.0+1
+version: 1.0.0+2
 repository: https://github.com/Jeilson-Dev/app_version_compare
 
 environment:
   sdk: ^2.19.6
 
-# Add regular dependencies here.
 dependencies:
-  # path: ^1.8.0
 
 dev_dependencies:
   lints: ^2.0.0
