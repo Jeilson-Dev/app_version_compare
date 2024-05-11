@@ -2,17 +2,28 @@
 get :
 	dart pub get
 
+setup_coverage :
+	dart pub global activate coverage
+
+
 # TESTS:
 
 tests : 
-	flutter test --coverage
+	dart run test --coverage=./coverage
+
 
 # TEST COVERAGE
 
-show-coverage : tests lcov
+show-coverage : lcov open-coverage
 
-lcov-ignore : 
-	lcov --remove coverage/lcov.info 'lib/core/*' 'lib/theme/*' 'lib/models/*.g.dart' -o coverage/lcov.info
+format-coverage :
+	dart pub global run coverage:format_coverage --packages=.dart_tool/package_config.json --report-on=lib --lcov -o ./coverage/lcov.info -i ./coverage
 
-lcov : tests lcov-ignore
-	genhtml -q -o coverage coverage/lcov.info && open coverage/index.html
+gen-coverage :
+	genhtml -o ./coverage/report ./coverage/lcov.info
+
+open-coverage :
+	open ./coverage/report/index.html
+
+lcov : tests format-coverage gen-coverage
+	

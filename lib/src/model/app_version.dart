@@ -61,6 +61,8 @@ class AppVersion {
 
   AppVersion({required this.major, required this.minor, required this.patch});
 
+  List<int> get _toList => [major, minor, patch];
+
   factory AppVersion.fromString(String appVersion) => AppVersion(
         major: appVersion._versionParts._major._secureParseInt,
         minor: appVersion._versionParts._minor._secureParseInt,
@@ -74,7 +76,8 @@ class AppVersion {
 
   bool operator >(Object other) {
     if (identical(this, other)) return true;
-    return other is AppVersion && major > other.major && minor > other.minor && patch > other.patch;
+    final isAppVersion = other is AppVersion;
+    return other is AppVersion && isGreater(_toList, other._toList);
   }
 
   bool operator <(Object other) {
@@ -98,4 +101,20 @@ class AppVersion {
 
   @override
   String toString() => '$major.$minor.$patch';
+
+  bool isGreater(List<int> a, List<int> b) {
+    if (a.isNotEmpty && b.isNotEmpty) {
+      if (a.first > b.first) return true;
+      return isGreater(a.sublist(1, a.length), b.sublist(1, b.length));
+    }
+    return false;
+  }
+
+  bool isLower(List<int> a, List<int> b) {
+    if (a.isNotEmpty && b.isNotEmpty) {
+      if (a.first < b.first) return true;
+      return isGreater(a.sublist(1, a.length), b.sublist(1, b.length));
+    }
+    return false;
+  }
 }
