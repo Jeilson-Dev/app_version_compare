@@ -40,8 +40,12 @@ jobs:
       # want to change this to 'flutter test'.
       - name: Run tests
         run: dart test
+        
+      - name: Setup coverage
+        run: make setup-coverage
       - name: Generate coverage
         run: make lcov
+        
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4.0.1
         with:
