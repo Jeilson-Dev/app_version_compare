@@ -71,7 +71,8 @@ class AppVersion {
 
   bool operator >=(Object other) {
     if (identical(this, other)) return true;
-    return other is AppVersion && (isGreater(_toList, other._toList) || isEqual(_toList, other._toList));
+    return other is AppVersion &&
+        (isGreater(_toList, other._toList) || isEqual(_toList, other._toList));
   }
 
   bool operator >(Object other) {
@@ -86,13 +87,19 @@ class AppVersion {
 
   bool operator <=(Object other) {
     if (identical(this, other)) return true;
-    return other is AppVersion && major <= other.major && minor <= other.minor && patch <= other.patch;
+    return other is AppVersion &&
+        major <= other.major &&
+        minor <= other.minor &&
+        patch <= other.patch;
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is AppVersion && major == other.major && minor == other.minor && patch == other.patch;
+    return other is AppVersion &&
+        major == other.major &&
+        minor == other.minor &&
+        patch == other.patch;
   }
 
   @override

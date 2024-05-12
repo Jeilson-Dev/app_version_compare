@@ -1,6 +1,6 @@
 name: app_version_compare
-description: A powerful tool to compare package or app versions.
-version: 1.0.2
+description: This Dart package offers a comprehensive utility for handling version strings in accordance with Semantic Versioning (SemVer) standards.
+version: 1.0.2+1
 repository: https://github.com/Jeilson-Dev/app_version_compare
 
 environment:

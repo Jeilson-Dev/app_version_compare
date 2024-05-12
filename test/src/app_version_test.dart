@@ -2,8 +2,10 @@ import 'package:app_version_compare/src/model/app_version.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test('''when passing a dirt version(with non numerical characters) are passed only numbers should be returned
-  if the input is 1ca231da.12da3w23,3e.233d@3s should return 1231.123233.2333''', () {
+  test(
+      '''when passing a dirt version(with non numerical characters) are passed only numbers should be returned
+  if the input is 1ca231da.12da3w23,3e.233d@3s should return 1231.123233.2333''',
+      () {
     final version = '1ca231da.12da3w23,3e.233d@3s';
 
     final result = AppVersion.fromString(version);
@@ -14,7 +16,9 @@ void main() {
     expect(result.toString(), '1231.123233.2333');
   });
 
-  test('when passing a string to AppVersion.fromString should return an instance of AppVersion with the numbers of version', () {
+  test(
+      'when passing a string to AppVersion.fromString should return an instance of AppVersion with the numbers of version',
+      () {
     final version = '1.2.3';
 
     final result = AppVersion.fromString(version);
@@ -24,7 +28,8 @@ void main() {
     expect(result.patch, 3);
   });
 
-  test('''when passing 1.2.3 to AppVersion.fromString should return an instance of AppVersion with the numbers of version
+  test(
+      '''when passing 1.2.3 to AppVersion.fromString should return an instance of AppVersion with the numbers of version
       when try to convert to string should return the same value, since using the default major(1), minor(2) and patch(3) 
       the other values should be discard''', () {
     final version = '1.2.3';
@@ -37,7 +42,9 @@ void main() {
     expect(result.toString(), version);
   });
 
-  test('''when passing 1.2.3.4 to AppVersion.fromString the other values should be discard''', () {
+  test(
+      '''when passing 1.2.3.4 to AppVersion.fromString the other values should be discard''',
+      () {
     final version = '1.2.3.4';
 
     final result = AppVersion.fromString(version);
@@ -49,7 +56,9 @@ void main() {
     expect(result.toString(), '1.2.3');
   });
 
-  test('''when passing 1.2.3+sda3 to AppVersion.fromString the other values should be discard''', () {
+  test(
+      '''when passing 1.2.3+sda3 to AppVersion.fromString the other values should be discard''',
+      () {
     final version = '1.2.3+sda3';
 
     final result = AppVersion.fromString(version);
@@ -104,7 +113,9 @@ void main() {
 
   group('Compare versions', () {
     group('Equal', () {
-      test('when comparing with the same values: major, minor and path should return true', () {
+      test(
+          'when comparing with the same values: major, minor and path should return true',
+          () {
         final version = '1.2.3';
 
         final result = AppVersion.fromString(version);
@@ -113,7 +124,9 @@ void main() {
         expect(result == AppVersion(major: 1, minor: 2, patch: 3), true);
       });
 
-      test('when comparing with different values: major, minor and path should return false', () {
+      test(
+          'when comparing with different values: major, minor and path should return false',
+          () {
         final version = '3.2.1';
 
         final result = AppVersion.fromString(version);
@@ -125,7 +138,9 @@ void main() {
     /// tests for Appversion > AppVersion
 
     group('Greater than', () {
-      test('when comparing with the same values: major, minor and path should return false', () {
+      test(
+          'when comparing with the same values: major, minor and path should return false',
+          () {
         final version = '1.2.3';
 
         final result = AppVersion.fromString(version);
@@ -133,7 +148,9 @@ void main() {
         expect(result > AppVersion(major: 1, minor: 2, patch: 3), false);
       });
 
-      test('when comparing different values: major, minor and path should return true', () {
+      test(
+          'when comparing different values: major, minor and path should return true',
+          () {
         final version = '3.2.1';
 
         final result = AppVersion.fromString(version);
@@ -220,7 +237,9 @@ void main() {
 
     /// tests for Appversion >= AppVersion
     group('Greater than or Equal', () {
-      test('when comparing with the same values: major, minor and path should return true', () {
+      test(
+          'when comparing with the same values: major, minor and path should return true',
+          () {
         final version = '1.2.3';
 
         final result = AppVersion.fromString(version);
@@ -228,7 +247,9 @@ void main() {
         expect(result >= AppVersion(major: 1, minor: 2, patch: 3), true);
       });
 
-      test('when comparing different values: major, minor and path should return true', () {
+      test(
+          'when comparing different values: major, minor and path should return true',
+          () {
         final version = '3.2.1';
 
         final result = AppVersion.fromString(version);
@@ -315,7 +336,9 @@ void main() {
 
     /// tests for Appversion < AppVersion
     group('Lower than', () {
-      test('when comparing with the same values: major, minor and path should return false', () {
+      test(
+          'when comparing with the same values: major, minor and path should return false',
+          () {
         final version = '1.2.3';
 
         final result = AppVersion.fromString(version);
@@ -323,7 +346,9 @@ void main() {
         expect(result < AppVersion(major: 1, minor: 2, patch: 3), false);
       });
 
-      test('when comparing different values: major, minor and path should return false', () {
+      test(
+          'when comparing different values: major, minor and path should return false',
+          () {
         final version = '3.2.1';
 
         final result = AppVersion.fromString(version);
@@ -410,7 +435,9 @@ void main() {
 
     /// tests for Appversion <= AppVersion
     group('Lower than', () {
-      test('when comparing with the same values: major, minor and path should return true', () {
+      test(
+          'when comparing with the same values: major, minor and path should return true',
+          () {
         final version = '1.2.3';
 
         final result = AppVersion.fromString(version);
@@ -418,7 +445,9 @@ void main() {
         expect(result <= AppVersion(major: 1, minor: 2, patch: 3), true);
       });
 
-      test('when comparing different values: major, minor and path should return false', () {
+      test(
+          'when comparing different values: major, minor and path should return false',
+          () {
         final version = '3.2.1';
 
         final result = AppVersion.fromString(version);
