@@ -1,3 +1,7 @@
+## 1.0.2
+
+- Increase code coverage and update docs.
+
 ## 1.0.1
 
 - Update dependencies and setup automated deploy.

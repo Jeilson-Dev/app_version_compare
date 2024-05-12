@@ -2,6 +2,18 @@ import 'package:app_version_compare/src/model/app_version.dart';
 import 'package:test/test.dart';
 
 void main() {
+  test('''when passing a dirt version(with non numerical characters) are passed only numbers should be returned
+  if the input is 1ca231da.12da3w23,3e.233d@3s should return 1231.123233.2333''', () {
+    final version = '1ca231da.12da3w23,3e.233d@3s';
+
+    final result = AppVersion.fromString(version);
+
+    expect(result.major, 1231);
+    expect(result.minor, 123233);
+    expect(result.patch, 2333);
+    expect(result.toString(), '1231.123233.2333');
+  });
+
   test('when passing a string to AppVersion.fromString should return an instance of AppVersion with the numbers of version', () {
     final version = '1.2.3';
 
@@ -27,6 +39,18 @@ void main() {
 
   test('''when passing 1.2.3.4 to AppVersion.fromString the other values should be discard''', () {
     final version = '1.2.3.4';
+
+    final result = AppVersion.fromString(version);
+
+    expect(result.major, 1);
+    expect(result.minor, 2);
+    expect(result.patch, 3);
+    expect(result.toString() == version, false);
+    expect(result.toString(), '1.2.3');
+  });
+
+  test('''when passing 1.2.3+sda3 to AppVersion.fromString the other values should be discard''', () {
+    final version = '1.2.3+sda3';
 
     final result = AppVersion.fromString(version);
 
@@ -97,6 +121,8 @@ void main() {
         expect(result == AppVersion(major: 1, minor: 2, patch: 3), false);
       });
     });
+
+    /// tests for Appversion > AppVersion
 
     group('Greater than', () {
       test('when comparing with the same values: major, minor and path should return false', () {
@@ -188,6 +214,291 @@ void main() {
           final result = AppVersion.fromString(version);
 
           expect(result > AppVersion(major: 0, minor: 1, patch: 1), true);
+        });
+      });
+    });
+
+    /// tests for Appversion >= AppVersion
+    group('Greater than or Equal', () {
+      test('when comparing with the same values: major, minor and path should return true', () {
+        final version = '1.2.3';
+
+        final result = AppVersion.fromString(version);
+
+        expect(result >= AppVersion(major: 1, minor: 2, patch: 3), true);
+      });
+
+      test('when comparing different values: major, minor and path should return true', () {
+        final version = '3.2.1';
+
+        final result = AppVersion.fromString(version);
+
+        expect(result >= AppVersion(major: 1, minor: 2, patch: 3), true);
+      });
+
+      group('patch', () {
+        test('''when 1.1.0 >= 1.1.1 should return false''', () {
+          final version = '1.1.0';
+
+          final result = AppVersion.fromString(version);
+
+          expect(result >= AppVersion(major: 1, minor: 1, patch: 1), false);
+        });
+
+        test('''when 1.1.1 >= 1.1.1 should return true''', () {
+          final version = '1.1.1';
+
+          final result = AppVersion.fromString(version);
+
+          expect(result >= AppVersion(major: 1, minor: 1, patch: 1), true);
+        });
+
+        test('''when 1.1.1 >= 1.1.0 should return true''', () {
+          final version = '1.1.1';
+
+          final result = AppVersion.fromString(version);
+
+          expect(result >= AppVersion(major: 1, minor: 1, patch: 0), true);
+        });
+      });
+      group('minor', () {
+        test('''when 1.0.1 >= 1.1.1 should return false''', () {
+          final version = '1.0.1';
+
+          final result = AppVersion.fromString(version);
+
+          expect(result >= AppVersion(major: 1, minor: 1, patch: 1), false);
+        });
+
+        test('''when 1.1.1 >= 1.1.1 should return true''', () {
+          final version = '1.1.1';
+
+          final result = AppVersion.fromString(version);
+
+          expect(result >= AppVersion(major: 1, minor: 1, patch: 1), true);
+        });
+
+        test('''when 1.1.1 >= 1.0.1 should return true''', () {
+          final version = '1.1.1';
+
+          final result = AppVersion.fromString(version);
+
+          expect(result >= AppVersion(major: 1, minor: 0, patch: 1), true);
+        });
+      });
+      group('major', () {
+        test('''when 0.1.1 >= 1.1.1 should return false''', () {
+          final version = '0.1.1';
+
+          final result = AppVersion.fromString(version);
+
+          expect(result >= AppVersion(major: 1, minor: 1, patch: 1), false);
+        });
+
+        test('''when 1.1.1 >= 1.1.1 should return true''', () {
+          final version = '1.1.1';
+
+          final result = AppVersion.fromString(version);
+
+          expect(result >= AppVersion(major: 1, minor: 1, patch: 1), true);
+        });
+
+        test('''when 1.1.1 >= 0.1.1 should return true''', () {
+          final version = '1.1.1';
+
+          final result = AppVersion.fromString(version);
+
+          expect(result >= AppVersion(major: 0, minor: 1, patch: 1), true);
+        });
+      });
+    });
+
+    /// tests for Appversion < AppVersion
+    group('Lower than', () {
+      test('when comparing with the same values: major, minor and path should return false', () {
+        final version = '1.2.3';
+
+        final result = AppVersion.fromString(version);
+
+        expect(result < AppVersion(major: 1, minor: 2, patch: 3), false);
+      });
+
+      test('when comparing different values: major, minor and path should return false', () {
+        final version = '3.2.1';
+
+        final result = AppVersion.fromString(version);
+
+        expect(result < AppVersion(major: 1, minor: 2, patch: 3), false);
+      });
+
+      group('patch', () {
+        test('''when 1.1.0 < 1.1.1 should return true''', () {
+          final version = '1.1.0';
+
+          final result = AppVersion.fromString(version);
+
+          expect(result < AppVersion(major: 1, minor: 1, patch: 1), true);
+        });
+
+        test('''when 1.1.1 < 1.1.1 should return false''', () {
+          final version = '1.1.1';
+
+          final result = AppVersion.fromString(version);
+
+          expect(result < AppVersion(major: 1, minor: 1, patch: 1), false);
+        });
+
+        test('''when 1.1.1 < 1.1.0 should return false''', () {
+          final version = '1.1.1';
+
+          final result = AppVersion.fromString(version);
+
+          expect(result < AppVersion(major: 1, minor: 1, patch: 0), false);
+        });
+      });
+      group('minor', () {
+        test('''when 1.0.1 < 1.1.1 should return true''', () {
+          final version = '1.0.1';
+
+          final result = AppVersion.fromString(version);
+
+          expect(result < AppVersion(major: 1, minor: 1, patch: 1), true);
+        });
+
+        test('''when 1.1.1 < 1.1.1 should return false''', () {
+          final version = '1.1.1';
+
+          final result = AppVersion.fromString(version);
+
+          expect(result < AppVersion(major: 1, minor: 1, patch: 1), false);
+        });
+
+        test('''when 1.1.1 < 1.0.1 should return false''', () {
+          final version = '1.1.1';
+
+          final result = AppVersion.fromString(version);
+
+          expect(result < AppVersion(major: 1, minor: 0, patch: 1), false);
+        });
+      });
+      group('major', () {
+        test('''when 0.1.1 < 1.1.1 should return true''', () {
+          final version = '0.1.1';
+
+          final result = AppVersion.fromString(version);
+
+          expect(result < AppVersion(major: 1, minor: 1, patch: 1), true);
+        });
+
+        test('''when 1.1.1 < 1.1.1 should return false''', () {
+          final version = '1.1.1';
+
+          final result = AppVersion.fromString(version);
+
+          expect(result < AppVersion(major: 1, minor: 1, patch: 1), false);
+        });
+
+        test('''when 1.1.1 < 0.1.1 should return false''', () {
+          final version = '1.1.1';
+
+          final result = AppVersion.fromString(version);
+
+          expect(result < AppVersion(major: 0, minor: 1, patch: 1), false);
+        });
+      });
+    });
+
+    /// tests for Appversion <= AppVersion
+    group('Lower than', () {
+      test('when comparing with the same values: major, minor and path should return true', () {
+        final version = '1.2.3';
+
+        final result = AppVersion.fromString(version);
+
+        expect(result <= AppVersion(major: 1, minor: 2, patch: 3), true);
+      });
+
+      test('when comparing different values: major, minor and path should return false', () {
+        final version = '3.2.1';
+
+        final result = AppVersion.fromString(version);
+
+        expect(result <= AppVersion(major: 1, minor: 2, patch: 3), false);
+      });
+
+      group('patch', () {
+        test('''when 1.1.0 <= 1.1.1 should return true''', () {
+          final version = '1.1.0';
+
+          final result = AppVersion.fromString(version);
+
+          expect(result <= AppVersion(major: 1, minor: 1, patch: 1), true);
+        });
+
+        test('''when 1.1.1 <= 1.1.1 should return true''', () {
+          final version = '1.1.1';
+
+          final result = AppVersion.fromString(version);
+
+          expect(result <= AppVersion(major: 1, minor: 1, patch: 1), true);
+        });
+
+        test('''when 1.1.1 <= 1.1.0 should return false''', () {
+          final version = '1.1.1';
+
+          final result = AppVersion.fromString(version);
+
+          expect(result <= AppVersion(major: 1, minor: 1, patch: 0), false);
+        });
+      });
+      group('minor', () {
+        test('''when 1.0.1 <= 1.1.1 should return true''', () {
+          final version = '1.0.1';
+
+          final result = AppVersion.fromString(version);
+
+          expect(result <= AppVersion(major: 1, minor: 1, patch: 1), true);
+        });
+
+        test('''when 1.1.1 <= 1.1.1 should return true''', () {
+          final version = '1.1.1';
+
+          final result = AppVersion.fromString(version);
+
+          expect(result <= AppVersion(major: 1, minor: 1, patch: 1), true);
+        });
+
+        test('''when 1.1.1 <= 1.0.1 should return false''', () {
+          final version = '1.1.1';
+
+          final result = AppVersion.fromString(version);
+
+          expect(result <= AppVersion(major: 1, minor: 0, patch: 1), false);
+        });
+      });
+      group('major', () {
+        test('''when 0.1.1 <= 1.1.1 should return true''', () {
+          final version = '0.1.1';
+
+          final result = AppVersion.fromString(version);
+
+          expect(result <= AppVersion(major: 1, minor: 1, patch: 1), true);
+        });
+
+        test('''when 1.1.1 <= 1.1.1 should return true''', () {
+          final version = '1.1.1';
+
+          final result = AppVersion.fromString(version);
+
+          expect(result <= AppVersion(major: 1, minor: 1, patch: 1), true);
+        });
+
+        test('''when 1.1.1 <= 0.1.1 should return false''', () {
+          final version = '1.1.1';
+
+          final result = AppVersion.fromString(version);
+
+          expect(result <= AppVersion(major: 0, minor: 1, patch: 1), false);
         });
       });
     });

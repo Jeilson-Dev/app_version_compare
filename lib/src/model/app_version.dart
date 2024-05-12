@@ -71,7 +71,7 @@ class AppVersion {
 
   bool operator >=(Object other) {
     if (identical(this, other)) return true;
-    return other is AppVersion && major >= other.major && minor >= other.minor && patch >= other.patch;
+    return other is AppVersion && (isGreater(_toList, other._toList) || isEqual(_toList, other._toList));
   }
 
   bool operator >(Object other) {
@@ -81,7 +81,7 @@ class AppVersion {
 
   bool operator <(Object other) {
     if (identical(this, other)) return true;
-    return other is AppVersion && major < other.major && minor < other.minor && patch < other.patch;
+    return other is AppVersion && isLower(_toList, other._toList);
   }
 
   bool operator <=(Object other) {
@@ -101,6 +101,7 @@ class AppVersion {
   @override
   String toString() => '$major.$minor.$patch';
 
+  /// Recursive function to determine if version 'a' is greater than version 'b'.
   bool isGreater(List<int> a, List<int> b) {
     if (a.isNotEmpty && b.isNotEmpty) {
       if (a.first > b.first) return true;
@@ -109,10 +110,18 @@ class AppVersion {
     return false;
   }
 
+  /// Recursive function to determine if version 'a' is equal than version 'b'.
+  bool isEqual(List<int> a, List<int> b) {
+    return a[0] == b[0] && a[1] == b[1] && a[2] == b[2];
+  }
+
+  /// Determines if the version represented by list 'a' is lower than the version represented by list 'b'.
   bool isLower(List<int> a, List<int> b) {
     if (a.isNotEmpty && b.isNotEmpty) {
+      if (a.first > b.first) return false;
       if (a.first < b.first) return true;
-      return isGreater(a.sublist(1, a.length), b.sublist(1, b.length));
+
+      return isLower(a.sublist(1, a.length), b.sublist(1, b.length));
     }
     return false;
   }
