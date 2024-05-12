@@ -6,8 +6,6 @@ repository: https://github.com/Jeilson-Dev/app_version_compare
 environment:
   sdk: ">=2.19.6 <4.0.0"
 
-dependencies:
-
 dev_dependencies:
   lints: ^2.0.0
   test: ^1.21.0
