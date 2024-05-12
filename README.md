@@ -1,6 +1,9 @@
 # App Version Compare
 
+[![Publish to pub.dev](https://github.com/Jeilson-Dev/app_version_compare/actions/workflows/publish.yml/badge.svg)](https://github.com/Jeilson-Dev/app_version_compare/actions/workflows/publish.yml)
 [![codecov](https://codecov.io/gh/Jeilson-Dev/app_version_compare/graph/badge.svg?token=0SB1GH2OUK)](https://codecov.io/gh/Jeilson-Dev/app_version_compare)
+[![Tests](https://github.com/Jeilson-Dev/app_version_compare/actions/workflows/dart.yml/badge.svg)](https://github.com/Jeilson-Dev/app_version_compare/actions/workflows/dart.yml)
+
 
 ## Overview
 
