@@ -2,7 +2,7 @@
 get :
 	dart pub get
 
-setup_coverage :
+setup-coverage :
 	dart pub global activate coverage
 
 

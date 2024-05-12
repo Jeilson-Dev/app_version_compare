@@ -1,5 +1,7 @@
 # App Version Compare
 
+[![codecov](https://codecov.io/gh/Jeilson-Dev/app_version_compare/graph/badge.svg?token=0SB1GH2OUK)](https://codecov.io/gh/Jeilson-Dev/app_version_compare)
+
 ## Overview
 
 This Dart package provides a utility for parsing version strings according to Semantic Versioning (SemVer) and comparing two versions. It's particularly useful for managing app versions and implementing version comparison logic, such as determining whether a force update is required based on a version retrieved from a remote configuration.
